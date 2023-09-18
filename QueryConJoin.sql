@@ -56,3 +56,13 @@ WHERE `departments`.`id` = 5;
 /* 7. BONUS: Selezionare per ogni studente il numero di tentativi sostenuti
 per ogni esame, stampando anche il voto massimo. Successivamente,
 filtrare i tentativi con voto minimo 18. */
+
+SELECT `students`.*, `exams`.`course_id`, COUNT(`exam_student`.`exam_id`), MAX(`exam_student`.`vote`), ROUND(AVG(`exam_student`.`vote`), 2)
+FROM `students`
+INNER JOIN `exam_student`
+	ON `students`.`id` = `exam_student`.`student_id`
+INNER JOIN `exams`
+    ON `exams`.`id` = `exam_student`.`exam_id`
+WHERE `exam_student`.`vote` >= 18    
+GROUP BY `students`.`id`, `exam`.`course_id`
+HAVING `appelli_d'esame` > 1;
